@@ -9,7 +9,9 @@ export default class Account extends Component {
     }
 
     this.handleDepositClick = this.handleDepositClick.bind(this)
+    this.handleWithdrawlClick = this.handleWithdrawlClick.bind(this)
   }
+// DEPOSIT FUNCTION HERE 
 
   handleDepositClick(e) {
     e.preventDefault();
@@ -26,6 +28,23 @@ export default class Account extends Component {
     }
   }
 
+// WITHDRAWL FUNCTION HERE 
+  handleWithdrawlClick(e) {
+    e.preventDefault();
+    if (isNaN(this.refs.amount.value)) {
+      console.log("Not a number");
+    }
+    else {
+      let amount = +this.refs.amount.value;
+      let newBalance = this.state.balance - amount;
+      this.setState({
+        balance: newBalance
+      })
+      this.refs.amount.value = '';
+    }
+  }
+
+// RENDERING HAPPENS HERE 
   render() {
     let balanceClass = 'balance';
     if (this.state.balance === 0) {
@@ -38,6 +57,7 @@ export default class Account extends Component {
         <div className={balanceClass}>${this.state.balance}</div>
         <input type="text" placeholder="enter an amount" ref="amount" />
         <input type="button" value="Deposit" onClick={this.handleDepositClick} />
+        <button type="button" value="Withdrawl" onClick={this.handleWithdrawlClick}>Withdrawl</button>
       </div>
     )
   }
